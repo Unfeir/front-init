@@ -110,7 +110,7 @@ def socket_server(ip, port):
 
 
 def run(server=HTTPServer, handler=HTTPHahdler):
-    address = ('127.0.0.1', 3000)
+    address = ('0.0.0.0', 3000)
     http_server = server(address, handler)
     try:
         http_server.serve_forever()
