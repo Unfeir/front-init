@@ -73,11 +73,11 @@ def send_msg(data):
     sock.close()
 
 def save_msg(msg):
-
+    msg = urllib.parse.unquote_plus(msg.decode())
     file = pathlib.Path().joinpath('storage/data.json')
     data = {}
     try:
-        msg_split = [el.split('=') for el in msg.decode().split('&')]
+        msg_split = [el.split('=') for el in msg.split('&')]
         reformat_msg = {msg_split[2][1]: {msg_split[0][0]: msg_split[0][1], msg_split[1][0]: msg_split[1][1]}}
         with open(file, 'r', encoding='UTF-8') as fd:
             old_data = json.load(fd)
@@ -110,7 +110,7 @@ def socket_server(ip, port):
 
 
 def run(server=HTTPServer, handler=HTTPHahdler):
-    address = ('0.0.0.0', 3000)
+    address = ('0.0.0.0', 3000) # ('127.0.0.1', 3000)
     http_server = server(address, handler)
     try:
         http_server.serve_forever()
